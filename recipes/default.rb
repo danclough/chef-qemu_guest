@@ -8,6 +8,7 @@ if node['virtualization']['role'] == 'guest'
     if platform_family?('windows')
       source "#{node['qemu_guest']['ga_windows_url']}/qemu-ga-#{node['kernel']['machine']}.msi"
       installer_type :msi
+      options '/q'
       action :install
     else
       package_name 'qemu-guest-agent'
@@ -21,9 +22,10 @@ if node['virtualization']['role'] == 'guest'
                 when 'i386'
                   'x86'
                 end
-    package 'QEMU Windows Guest Tools' do
+    windows_package 'QEMU Windows Guest Tools' do
       source "#{node['qemu_guest']['gt_windows_url']}/virtio-win-gt-#{arch_str}.msi"
       installer_type :msi
+      options '/q /norestart'
       action :install
     end
   end

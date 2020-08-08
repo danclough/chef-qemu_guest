@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of the qemu-guest cookbook.
 
+# 0.2.1
+- Added silent/noreboot install for Windows guest tools package.
+
 # 0.2.0
 - Refactored default recipe.
 - Reorganized attributes for Windows guest tool URLs.
