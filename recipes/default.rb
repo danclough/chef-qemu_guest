@@ -4,16 +4,9 @@
 #
 
 if node['virtualization']['role'] == 'guest'
-  arch_str =  case node['kernel']['machine']
-              when 'x86_64'
-                'x64'
-              when 'i386'
-                'x86'
-              end
-
   package 'QEMU Guest Agent' do
     if platform_family?('windows')
-      source "#{node['qemu-guest']['ga_windows_url']}/qemu-ga-#{arch_str}.msi"
+      source "#{node['qemu_guest']['ga_windows_url']}/qemu-ga-#{node['kernel']['machine']}.msi"
       installer_type :msi
       action :install
     else
@@ -22,8 +15,14 @@ if node['virtualization']['role'] == 'guest'
   end
 
   if platform_family?('windows')
+    arch_str =  case node['kernel']['machine']
+                when 'x86_64'
+                  'x64'
+                when 'i386'
+                  'x86'
+                end
     package 'QEMU Windows Guest Tools' do
-      source "#{node['qemu-guest']['gt_windows_url']}/virtio-win-gt-#{arch_str}.msi"
+      source "#{node['qemu_guest']['gt_windows_url']}/virtio-win-gt-#{arch_str}.msi"
       installer_type :msi
       action :install
     end
